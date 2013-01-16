@@ -150,7 +150,7 @@ function Init()
 
  
             var colorBoard='#00ffff';
-            var BoardWidth=2;
+            var BoardWidth=1;
             var xx,yy;img=[];
 
       //1 player (White)
@@ -167,6 +167,8 @@ function Init()
                     xx=0;yy=0;No=1;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -181,6 +183,8 @@ function Init()
                     xx=1;yy=0;No=2;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE2
@@ -194,6 +198,8 @@ function Init()
                     xx=0;yy=1;No=3;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
             //GR1
@@ -207,6 +213,8 @@ function Init()
                     xx=2;yy=0;No=4;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -221,6 +229,8 @@ function Init()
                     xx=3;yy=0;No=5;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -235,6 +245,8 @@ function Init()
                     xx=1;yy=1;No=6;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -249,6 +261,8 @@ function Init()
                     xx=2;yy=1;No=7;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -263,6 +277,8 @@ function Init()
                     xx=3;yy=1;No=8;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -277,6 +293,8 @@ function Init()
                     xx=4;yy=0;No=9;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -291,6 +309,8 @@ function Init()
                     xx=5;yy=0;No=10;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -305,6 +325,8 @@ function Init()
                     xx=4;yy=1;No=11;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -323,6 +345,8 @@ function Init()
                     xx=7;yy=0;No=21;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE1
@@ -336,6 +360,8 @@ function Init()
                     xx=8;yy=0;No=22;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE2
@@ -349,6 +375,8 @@ function Init()
                     xx=7;yy=1;No=23;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
             //GR1
@@ -362,6 +390,8 @@ function Init()
                     xx=9;yy=0;No=24;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -376,6 +406,8 @@ function Init()
                     xx=10;yy=0;No=25;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -390,6 +422,8 @@ function Init()
                     xx=8;yy=1;No=26;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -404,6 +438,8 @@ function Init()
                     xx=9;yy=1;No=27;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -418,6 +454,8 @@ function Init()
                     xx=10;yy=1;No=28;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -432,6 +470,8 @@ function Init()
                     xx=11;yy=0;No=29;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
  
 
@@ -446,6 +486,8 @@ function Init()
                     xx=12;yy=0;No=30;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -460,6 +502,8 @@ function Init()
                     xx=11;yy=1;No=31;
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
+                    var l=ArenaObj[No].length;
+                    ArenaObj[No][l-2].up('top');
                   }; 
 
 
