@@ -276,6 +276,7 @@ function NoItem(ItemStr){
 function MoveItem(ItemStr, x, y){
   //ItemStr="bQB21" , "wQB01"
   // move to cell (x,y)
+  ItemStr=ItemStr.substring(0,5);
   var No=NoItem(ItemStr);
   var x1=ItemCoord[No][0];
   var y1=ItemCoord[No][1];
@@ -353,7 +354,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             AddString("wQB"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            
                  img[No] = new Image();
                  img[No].src="img/QB.gif";
                  img[No].onload=function(){
@@ -362,8 +363,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -372,7 +374,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             AddString("wBE"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BE.gif";
                  img[No].onload=function(){
@@ -381,8 +383,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE2
@@ -391,7 +394,7 @@ function InitItems(){
             //Arena[xx][yy]="wBE"+"0"+No;
             AddString("wBE"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BE.gif";
                  img[No].onload=function(){
@@ -400,8 +403,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
             //GR1
@@ -410,7 +414,7 @@ function InitItems(){
             //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GR.gif";
                  img[No].onload=function(){
@@ -419,8 +423,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -450,7 +455,7 @@ function InitItems(){
             //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GR.gif";
                  img[No].onload=function(){
@@ -459,8 +464,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -470,7 +476,7 @@ function InitItems(){
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
                  img[No].onload=function(){
@@ -479,8 +485,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -490,7 +497,7 @@ function InitItems(){
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
                  img[No].onload=function(){
@@ -499,8 +506,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -510,7 +518,7 @@ function InitItems(){
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
                  img[No].onload=function(){
@@ -519,8 +527,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -530,7 +539,7 @@ function InitItems(){
             //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SP.gif";
                  img[No].onload=function(){
@@ -539,8 +548,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -550,7 +560,7 @@ function InitItems(){
             //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SP.gif";
                  img[No].onload=function(){
@@ -559,8 +569,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -574,7 +585,7 @@ function InitItems(){
             //Arena[xx][yy]="bQB"+No;
             AddString("bQB"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/QBb.gif";
                  img[No].onload=function(){
@@ -583,8 +594,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE1
@@ -593,7 +605,7 @@ function InitItems(){
             //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BEb.gif";
                  img[No].onload=function(){
@@ -602,8 +614,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
             //BE2
@@ -612,7 +625,7 @@ function InitItems(){
             //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BEb.gif";
                  img[No].onload=function(){
@@ -621,8 +634,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
             //GR1
@@ -631,7 +645,7 @@ function InitItems(){
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
                  img[No].onload=function(){
@@ -640,8 +654,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -651,7 +666,7 @@ function InitItems(){
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
                  img[No].onload=function(){
@@ -660,8 +675,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -671,7 +687,7 @@ function InitItems(){
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
                  img[No].onload=function(){
@@ -680,8 +696,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -691,7 +708,7 @@ function InitItems(){
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
                  img[No].onload=function(){
@@ -700,8 +717,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -711,7 +729,7 @@ function InitItems(){
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
                  img[No].onload=function(){
@@ -720,8 +738,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -731,7 +750,7 @@ function InitItems(){
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
                  img[No].onload=function(){
@@ -740,8 +759,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
  
 
@@ -751,7 +771,7 @@ function InitItems(){
             //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SPb.gif";
                  img[No].onload=function(){
@@ -760,8 +780,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
@@ -771,7 +792,7 @@ function InitItems(){
             //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SPb.gif";
                  img[No].onload=function(){
@@ -780,8 +801,9 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
