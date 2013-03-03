@@ -261,6 +261,16 @@ function BoardCells(x, y){
   };
 };
 
+function LevelItem(ItemStr){
+  var lvl=0;
+  if (ItemStr==undefined){
+    lvl=0;
+  }else{  
+    lvl=ItemStr.length;
+  };
+  return lvl;
+};
+
 
 function TransTo(Objs, dx, dy, lvl){
   for (var i=0;i<Objs.length;i++){
@@ -290,13 +300,8 @@ function MoveItem(ItemStr, x, y){
   var dx=a.x-xc_1;
   var dy=a.y-yc_1;
   
-  var lvl;
-  if (Arena[x][y]==undefined){
-    lvl=0;
-  }else{
-    lvl=Arena[x][y].length;
-  };
-
+  var lvl=LevelItem(Arena[x][y]);
+  
   TransTo(ArenaObj[No],dx,dy, lvl);
   
   //Arena[x1][y1]=undefined;
