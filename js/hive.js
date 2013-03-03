@@ -197,22 +197,14 @@ function Hexagon(point, size){
 };
 
 
-function HexagonFill(point, size, colorRGB){
+function HexagonFill(point, size, colorRGB, lvl){
   var Ar=[];
-  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1));
-  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1).rotate(-60,'center'));
-  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1).rotate(+60,'center'));
+  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1).level(lvl));
+  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1).rotate(-60,'center').level(lvl+1));
+  Ar.push(jc.rect(point.x-sqrt3*size/2,point.y-size/2,sqrt3*size,size,colorRGB,1).rotate(+60,'center').level(lvl+2));
   return Ar;
 };
 
-
-function HexagonFill_old(point, size, colorRGB){
-  var Ar=[];
-  for (var i=1;i<=size-2;i++){
-    Ar.push(Hexagon(point, i).color(colorRGB).opacity(1).lineStyle({lineWidth:2}));
-  };
-  return Ar;
-};
 
 function FindXY(point){
      xt=Math.round(point.x/(sqrt3*Size)-1);
@@ -253,6 +245,7 @@ function ChangeXY(i, j){
   return new Point(xc, yc);          
 };
 
+
 function BoardCells(x, y){
   if (y % 2 == 0){
     return [[x-1, y],[x-1, y-1],[x, y-1],[x+1, y],[x, y+1],[x-1, y+1]];
@@ -261,6 +254,7 @@ function BoardCells(x, y){
   };
 };
 
+
 function LevelItem(ItemStr){
   var lvl=0;
   if (ItemStr==undefined){
@@ -268,7 +262,7 @@ function LevelItem(ItemStr){
   }else{  
     lvl=ItemStr.length;
   };
-  return lvl;
+  return 100+lvl*100;
 };
 
 
@@ -276,13 +270,15 @@ function TransTo(Objs, dx, dy, lvl){
   for (var i=0;i<Objs.length;i++){
      var point=Objs[i].position();
      Objs[i].translateTo(point.x+dx, point.y+dy);
-     Objs[i].level(100+lvl*100+i);
+     Objs[i].level(lvl+i);
   };
 };
+
 
 function NoItem(ItemStr){
   return parseInt(ItemStr.substring(3,5),10);
 };
+
 
 function MoveItem(ItemStr, x, y){
   //ItemStr="bQB21" , "wQB01"
@@ -302,7 +298,7 @@ function MoveItem(ItemStr, x, y){
   
   var lvl=LevelItem(Arena[x][y]);
   
-  TransTo(ArenaObj[No],dx,dy, lvl);
+  TransTo(ArenaObj[No],dx,dy,lvl);
   
   //Arena[x1][y1]=undefined;
   RemoveString(ItemStr, x1, y1)
@@ -313,6 +309,7 @@ function MoveItem(ItemStr, x, y){
   ItemCoord[No]=[x, y];
 };
 
+
 function AddString(ItemStr, x, y){
   var str=Arena[x][y];
   if (str==undefined){
@@ -322,6 +319,7 @@ function AddString(ItemStr, x, y){
     Arena[x][y]=ItemStr+str;
   };
 };
+
 
 function RemoveString(ItemStr, x, y){
   var str=Arena[x][y];
@@ -334,10 +332,6 @@ function RemoveString(ItemStr, x, y){
   };
   if (Arena[x][y]==""){Arena[x][y]=undefined;};
 };
-
-
-
-
 
 
 function SelectAll(arr){
@@ -358,7 +352,7 @@ function SelectAll(arr){
 
 
 function InitItems(){
-  var xx,yy,No;      
+  var xx,yy,No,lvl;      
   var img=[];
         //1 player (White)
           
@@ -366,28 +360,30 @@ function InitItems(){
             //QB
             xx=0;yy=0;No=1;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             AddString("wQB"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             
                  img[No] = new Image();
-                 img[No].src="img/QB.gif";
                  img[No].onload=function(){
                     No=1;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(30,'center'));
+                    lvl=ArenaObj[No][0].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
-
+                 img[No].src="img/QB.gif";
 
             //BE1
             xx=0;yy=0;No=2;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             AddString("wBE"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BE.gif";
@@ -405,9 +401,10 @@ function InitItems(){
             //BE2
             xx=0;yy=0;No=3;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wBE"+"0"+No;
             AddString("wBE"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BE.gif";
@@ -425,9 +422,10 @@ function InitItems(){
             //GR1
             xx=0;yy=0;No=4;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GR.gif";
@@ -446,10 +444,11 @@ function InitItems(){
             //GR2
             xx=0;yy=0;No=5;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
-            ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GR.gif";
                  img[No].onload=function(){
@@ -458,17 +457,19 @@ function InitItems(){
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    var l=ArenaObj[No].length;
-                    ArenaObj[No][l-2].up('top');
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
+                    //var l=ArenaObj[No].length;
+                    //ArenaObj[No][l-2].up('top');
                   }; 
 
 
             //GR3
             xx=0;yy=0;No=6;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GR.gif";
@@ -487,9 +488,10 @@ function InitItems(){
             //AN1
             xx=0;yy=0;No=7;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
@@ -508,9 +510,10 @@ function InitItems(){
            //AN2
             xx=0;yy=0;No=8;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
@@ -529,9 +532,10 @@ function InitItems(){
            //AN3
             xx=0;yy=0;No=9;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/AN.gif";
@@ -550,9 +554,10 @@ function InitItems(){
             //SP1
             xx=0;yy=0;No=10;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SP.gif";
@@ -571,9 +576,10 @@ function InitItems(){
             //SP2
             xx=0;yy=0;No=11;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SP.gif";
@@ -596,9 +602,10 @@ function InitItems(){
             //QB
             xx=0;yy=0;No=21;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bQB"+No;
             AddString("bQB"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/QBb.gif";
@@ -616,9 +623,10 @@ function InitItems(){
             //BE1
             xx=0;yy=0;No=22;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BEb.gif";
@@ -636,9 +644,10 @@ function InitItems(){
             //BE2
             xx=0;yy=0;No=23;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/BEb.gif";
@@ -656,9 +665,10 @@ function InitItems(){
             //GR1
             xx=0;yy=0;No=24;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
@@ -677,9 +687,10 @@ function InitItems(){
             //GR2
             xx=0;yy=0;No=25;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
@@ -698,9 +709,10 @@ function InitItems(){
             //GR3
             xx=0;yy=0;No=26;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/GRb.gif";
@@ -719,9 +731,10 @@ function InitItems(){
             //AN1
             xx=0;yy=0;No=27;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
@@ -740,9 +753,10 @@ function InitItems(){
            //AN2
             xx=0;yy=0;No=28;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
@@ -761,9 +775,10 @@ function InitItems(){
             //AN3
             xx=0;yy=0;No=29;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/ANb.gif";
@@ -782,9 +797,10 @@ function InitItems(){
             //SP1
             xx=0;yy=0;No=30;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SPb.gif";
@@ -803,9 +819,10 @@ function InitItems(){
             //SP2
             xx=0;yy=1;No=31;
             ItemCoord[No]=[xx, yy];
+            lvl=LevelItem(Arena[xx][yy]);
             //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000');
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
             //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
                  img[No].src="img/SPb.gif";
