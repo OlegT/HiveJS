@@ -124,7 +124,6 @@ function Init()
 
      for (var i = 0; i < SizeX; i++) {
          for (var j = 0; j < SizeY; j++) {
-             //ChangeXY(i,j);
              hh=Hexagon(ChangeXY(i,j), Size).opacity(0.2);
          }
       }
@@ -260,7 +259,7 @@ function LevelItem(ItemStr){
   if (ItemStr==undefined){
     lvl=0;
   }else{  
-    lvl=ItemStr.length;
+    lvl=Math.ceil(ItemStr.length/5);
   };
   return 100+lvl*100;
 };
@@ -358,241 +357,216 @@ function InitItems(){
           
             
             //QB
-            xx=0;yy=0;No=1;
+            xx=2;yy=2;No=1;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wQB"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=1;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    lvl=ArenaObj[No][0].level();
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7, Size*1.2,Size*1.4).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/QB.gif";
 
+
             //BE1
-            xx=0;yy=0;No=2;
+            xx=2;yy=2;No=2;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wBE"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/BE.gif";
                  img[No].onload=function(){
                     No=2;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
+                  img[No].src="img/BE.gif";
+
 
             //BE2
-            xx=0;yy=0;No=3;
+            xx=2;yy=2;No=3;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wBE"+"0"+No;
             AddString("wBE"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/BE.gif";
                  img[No].onload=function(){
                     No=3;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
+                 img[No].src="img/BE.gif";
+
 
             //GR1
-            xx=0;yy=0;No=4;
+            xx=2;yy=2;No=4;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GR.gif";
                  img[No].onload=function(){
                     No=4;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/GR.gif";
 
 
             //GR2
-            xx=0;yy=0;No=5;
+            xx=2;yy=2;No=5;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GR.gif";
                  img[No].onload=function(){
                     No=5;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));
                   }; 
+                 img[No].src="img/GR.gif";
 
 
             //GR3
-            xx=0;yy=0;No=6;
+            xx=2;yy=2;No=6;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wGR"+"0"+No;
             AddString("wGR"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GR.gif";
                  img[No].onload=function(){
                     No=6;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/GR.gif";
 
 
             //AN1
-            xx=0;yy=0;No=7;
+            xx=2;yy=2;No=7;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/AN.gif";
                  img[No].onload=function(){
                     No=7;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/AN.gif";
 
 
            //AN2
-            xx=0;yy=0;No=8;
+            xx=2;yy=2;No=8;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/AN.gif";
                  img[No].onload=function(){
                     No=8;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/AN.gif";
 
 
            //AN3
-            xx=0;yy=0;No=9;
+            xx=2;yy=2;No=9;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wAN"+"0"+No;
             AddString("wAN"+"0"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/AN.gif";
                  img[No].onload=function(){
                     No=9;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/AN.gif";
 
 
             //SP1
-            xx=0;yy=0;No=10;
+            xx=2;yy=2;No=10;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/SP.gif";
                  img[No].onload=function(){
                     No=10;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/SP.gif";
 
 
             //SP2
-            xx=0;yy=0;No=11;
+            xx=2;yy=2;No=11;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wSP"+No;
             AddString("wSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/SP.gif";
                  img[No].onload=function(){
                     No=11;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/SP.gif";
 
 
 
@@ -600,242 +574,212 @@ function InitItems(){
             //2 player (Black)
 
             //QB
-            xx=0;yy=0;No=21;
+            xx=2;yy=2;No=21;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bQB"+No;
             AddString("bQB"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/QBb.gif";
                  img[No].onload=function(){
                     No=21;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/QBb.gif";
+
 
             //BE1
-            xx=0;yy=0;No=22;
+            xx=2;yy=2;No=22;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/BEb.gif";
                  img[No].onload=function(){
                     No=22;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/BEb.gif";
+
 
             //BE2
-            xx=0;yy=0;No=23;
+            xx=2;yy=2;No=23;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bBE"+No;
             AddString("bBE"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/BEb.gif";
                  img[No].onload=function(){
                     No=23;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/BEb.gif";
+
 
             //GR1
-            xx=0;yy=0;No=24;
+            xx=2;yy=2;No=24;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GRb.gif";
                  img[No].onload=function(){
                     No=24;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/GRb.gif";
 
 
             //GR2
-            xx=0;yy=0;No=25;
+            xx=2;yy=2;No=25;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GRb.gif";
                  img[No].onload=function(){
                     No=25;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/GRb.gif";
 
 
             //GR3
-            xx=0;yy=0;No=26;
+            xx=2;yy=2;No=26;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bGR"+No;
             AddString("bGR"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/GRb.gif";
                  img[No].onload=function(){
                     No=26;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/GRb.gif";
 
 
             //AN1
-            xx=0;yy=0;No=27;
+            xx=2;yy=2;No=27;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/ANb.gif";
                  img[No].onload=function(){
                     No=27;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/ANb.gif";
 
 
            //AN2
-            xx=0;yy=0;No=28;
+            xx=2;yy=2;No=28;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/ANb.gif";
                  img[No].onload=function(){
                     No=28;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/ANb.gif";
 
 
             //AN3
-            xx=0;yy=0;No=29;
+            xx=2;yy=2;No=29;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="bAN"+No;
             AddString("bAN"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/ANb.gif";
                  img[No].onload=function(){
                     No=29;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/ANb.gif";
  
 
             //SP1
-            xx=0;yy=0;No=30;
+            xx=2;yy=2;No=30;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/SPb.gif";
                  img[No].onload=function(){
                     No=30;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/SPb.gif";
 
 
             //SP2
-            xx=0;yy=1;No=31;
+            xx=2;yy=2;No=31;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
-            //Arena[xx][yy]="wSP"+No;
             AddString("bSP"+No, xx, yy);
             ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
-            //ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));
                  img[No] = new Image();
-                 img[No].src="img/SPb.gif";
                  img[No].onload=function(){
                     No=31;
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
-                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center'));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}));                
-                    //var l=ArenaObj[No].length;
-                    //ArenaObj[No][l-2].up('top');
+                    lvl=ArenaObj[No][2].level();
+                    ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
+                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
+                 img[No].src="img/SPb.gif";
 
 
 };
