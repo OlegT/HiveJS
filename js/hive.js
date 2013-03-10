@@ -1,6 +1,6 @@
 
 
-var Size = 25;
+var Size = 24;
 var SizeX = 19;//19;
 var SizeY = 21;//21;
 
@@ -12,10 +12,17 @@ var idCanvas='canvas'
 
 var CanvasX=650;
 var CanvasY=650;
-var SelectItemColor='#ff0000'; //RED
+var SelectItemColor='#ffcc00'; // #66ccff color select item http://www.web-palette.ru/sub/useful/cozdaem/vozvopros/mf
 
-var colorBoard='#00ffff';
-var BoardWidth=1;
+var colorBoard='#cc9900'; // color of board cell
+var BoardWidth=1.5;
+
+var WhiteItem='#ffffff';
+var BlackItem='#000000';
+
+var lvl_x=Size/12;
+var lvl_y=-Size/6;
+
 
 
 
@@ -49,7 +56,7 @@ function Init()
             //var text=jc.text("",50,50);
            
             
-            jc.rect(0,0,CanvasX,CanvasY,'#cdb7b5',1)
+            jc.rect(0,0,CanvasX,CanvasY,'#f7dcb4',1)  //#a97d5d #cdb7b5 F7DCB4
               .click(function(point){
               //  this.color('#ff0000');
               //  text.string('x='+point.x+', y='+point.y);
@@ -61,15 +68,11 @@ function Init()
                      yt=SelHex.y;
 
                      if (Arena[xt][yt]!=undefined && Arena[xt][yt]!=''){
-                        //alert(Arena[xt][yt]);
-                  
-                        //hhAr=HexagonFill(xc,yc, Size,'#ffffff');
+                        
                         xt_1=xt;
                         yt_1=yt;
-                        //ChangeXY(xt,yt);
-                        hh=Hexagon(ChangeXY(xt,yt), Size);
-                        hh.opacity(0.9).color(SelectItemColor).lineStyle({lineWidth:6});
-                        hhAr.push(hh);                     
+                        hhAr.push(Sel_Item(xt, yt));
+                       
                         SelectItem=1;
                      };
 
@@ -80,39 +83,18 @@ function Init()
                      xt=SelHex.x;
                      yt=SelHex.y;
                      MoveItem(Arena[xt_1][yt_1], xt, yt);
-                     //if (Arena[xt][yt]==undefined || Arena[xt][yt]==''){
-                     //      MoveItem(Arena[xt_1][yt_1], xt, yt);
-                     //}else{
-                     //   xt_1=xt;
-                     //   yt_1=yt;
-                     //   //ChangeXY(xt,yt);
-                     //   hh=Hexagon(ChangeXY(xt,yt), Size);
-                     //   hh.opacity(0.9).color(SelectItemColor).lineStyle({lineWidth:6});
-                     //   hhAr.push(hh);                     
-                     //  SelectItem=1;
-
-
-
-                     //};
-                     
-
-
-
 
                   };
 
                 })
               .mousedown(function(point){
-                //md=1;
-                //hh=Hexagon(point.x,point.y, Size);
+                
                 })
               .mouseup(function(point){
-                //md=0;
-                //hh.del();
+                
                 })
               .mousemove(function(point){
-                //hh.del();
-                //hh=Hexagon(point.x,point.y, Size);
+                
                 });
 
 
@@ -122,9 +104,9 @@ function Init()
 
 
 
-     for (var i = 0; i < SizeX; i++) {
-         for (var j = 0; j < SizeY; j++) {
-             hh=Hexagon(ChangeXY(i,j), Size).opacity(0.2);
+     for (var i = -1; i < SizeX; i++) {
+         for (var j = 3; j < SizeY; j++) {
+             hh=Hexagon(ChangeXY(i,j), Size).opacity(0.2).level(50).color('#9c9f84');
          }
       }
 
@@ -254,14 +236,29 @@ function BoardCells(x, y){
 };
 
 
-function LevelItem(ItemStr){
+function LevelNo(ItemStr){
   var lvl=0;
   if (ItemStr==undefined){
     lvl=0;
   }else{  
     lvl=Math.ceil(ItemStr.length/5);
   };
-  return 100+lvl*100;
+  return lvl;
+};
+
+
+function LevelItem(ItemStr){
+  return 100+LevelNo(ItemStr)*100;
+};
+
+function Sel_Item(x, y){
+  var pt=ChangeXY(xt,yt);
+  var lvl=LevelNo(Arena[x][y])-1;
+  pt.x=pt.x+lvl*lvl_x;
+  pt.y=pt.y+lvl*lvl_y;
+  var hh=Hexagon(pt, Size);
+  hh.opacity(0.7).color(SelectItemColor).lineStyle({lineWidth:6});
+  return hh;                     
 };
 
 
@@ -282,25 +279,29 @@ function NoItem(ItemStr){
 function MoveItem(ItemStr, x, y){
   //ItemStr="bQB21" , "wQB01"
   // move to cell (x,y)
+  var lvl=LevelNo(ItemStr)-1;
   ItemStr=ItemStr.substring(0,5);
   var No=NoItem(ItemStr);
   var x1=ItemCoord[No][0];
   var y1=ItemCoord[No][1];
   
   var a=ChangeXY(x1,y1);
-  var xc_1=a.x;
-  var yc_1=a.y; 
-
+  var xc_1=a.x+lvl*lvl_x;
+  var yc_1=a.y+lvl*lvl_y; 
+  
+  RemoveString(ItemStr, x1, y1)
+  
+  lvl=LevelNo(Arena[x][y]);
   var a=ChangeXY(x,y);
-  var dx=a.x-xc_1;
-  var dy=a.y-yc_1;
+  var dx=a.x-xc_1+lvl*lvl_x;
+  var dy=a.y-yc_1+lvl*lvl_y;
   
   var lvl=LevelItem(Arena[x][y]);
   
   TransTo(ArenaObj[No],dx,dy,lvl);
   
   //Arena[x1][y1]=undefined;
-  RemoveString(ItemStr, x1, y1)
+
   //Arena[x][y]=ItemStr;
   AddString(ItemStr, x, y);
   
@@ -361,7 +362,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wQB"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=1;
@@ -380,7 +381,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wBE"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=2;
@@ -401,7 +402,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wBE"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=3;
@@ -422,7 +423,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=4;
@@ -441,7 +442,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=5;
@@ -460,7 +461,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wGR"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=6;
@@ -479,7 +480,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=7;
@@ -498,7 +499,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=8;
@@ -517,7 +518,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wAN"+"0"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=9;
@@ -536,7 +537,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=10;
@@ -555,7 +556,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("wSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#ffffff',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,WhiteItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=11;
@@ -572,13 +573,13 @@ function InitItems(){
 
 
             //2 player (Black)
-
+             
             //QB
             xx=2;yy=2;No=21;
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bQB"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=21;
@@ -597,7 +598,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bBE"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=22;
@@ -616,7 +617,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bBE"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=23;
@@ -635,7 +636,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=24;
@@ -654,7 +655,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=25;
@@ -673,7 +674,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bGR"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=26;
@@ -692,7 +693,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=27;
@@ -711,7 +712,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=28;
@@ -730,7 +731,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bAN"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=29;
@@ -749,7 +750,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=30;
@@ -768,7 +769,7 @@ function InitItems(){
             ItemCoord[No]=[xx, yy];
             lvl=LevelItem(Arena[xx][yy]);
             AddString("bSP"+No, xx, yy);
-            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,'#000000',lvl);
+            ArenaObj[No] =HexagonFill(ChangeXY(xx,yy), Size,BlackItem,lvl);
                  img[No] = new Image();
                  img[No].onload=function(){
                     No=31;
