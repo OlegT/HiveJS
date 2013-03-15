@@ -28,6 +28,8 @@ var lvl_y=-Size/6;
 
 
 var Player=1;
+var NoMove=1;
+
 
 var Arena=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var ArenaObj=[];
@@ -39,6 +41,7 @@ var xt=0;
 var yt=0;
 var xc=0;
 var yc=0;
+var as='';
 
 var xt_1, yt_1;
 
@@ -46,7 +49,7 @@ var hh;
 var hhAr=[];
 
 
-var qbiiim;
+//var qbiiim;
 
 function Init()
  {
@@ -57,7 +60,7 @@ function Init()
            
             
             jc.rect(0,0,CanvasX,CanvasY,'#f7dcb4',1)  //#a97d5d #cdb7b5 F7DCB4
-              .click(function(point){
+              .mousedown(function(point){
               //  this.color('#ff0000');
               //  text.string('x='+point.x+', y='+point.y);
               //  text.up('top');
@@ -66,9 +69,10 @@ function Init()
                      var SelHex=FindXY(point);
                      xt=SelHex.x;
                      yt=SelHex.y;
-
+                     
                      if (Arena[xt][yt]!=undefined && Arena[xt][yt]!=''){
-                        
+
+                        as=Arena[xt][yt];
                         xt_1=xt;
                         yt_1=yt;
                         hhAr.push(Sel_Item(xt, yt));
@@ -83,11 +87,14 @@ function Init()
                      xt=SelHex.x;
                      yt=SelHex.y;
                      MoveItem(Arena[xt_1][yt_1], xt, yt);
+                     if (Arena[xt_1][yt_1]!=as){
+                        NextMove();
+                     }
 
                   };
 
                 })
-              .mousedown(function(point){
+              .click(function(point){
                 
                 })
               .mouseup(function(point){
@@ -332,6 +339,25 @@ function RemoveString(ItemStr, x, y){
   };
   if (Arena[x][y]==""){Arena[x][y]=undefined;};
 };
+
+
+
+
+function NextMove(){
+  NoMove++;
+
+  if (NoMove%2==0){
+    $('#ColorItem').text("Black");
+  }else{
+    $('#ColorItem').text("White");
+  };
+
+
+}
+
+
+
+
 
 
 function SelectAll(arr){
