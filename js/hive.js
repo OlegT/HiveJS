@@ -13,6 +13,7 @@ var idCanvas='canvas'
 var CanvasX=650;
 var CanvasY=650;
 var SelectItemColor='#ffcc00'; // #66ccff color select item http://www.web-palette.ru/sub/useful/cozdaem/vozvopros/mf
+var SelectAvailItem='#66ccff';
 
 var colorBoard='#cc9900'; // color of board cell
 var BoardWidth=1.5;
@@ -47,7 +48,7 @@ var xt_1, yt_1;
 
 var hh;
 var hhAr=[];
-
+var hhAv=[];
 
 //var qbiiim;
 
@@ -77,16 +78,20 @@ function Init()
                           as=Arena[xt][yt];
                           xt_1=xt;
                           yt_1=yt;
-                          hhAr.push(Sel_Item(xt, yt));
+                          hhAr.push(Sel_Item(xt, yt, SelectItemColor));
                        
                           SelectItem=1;
                           AvCells=AvailableCells(as, xt, yt); 
-                          SelectAll(AvCells);
+                          hhAv=SelectAvail(AvCells);
+
+                          hhAr[0].level(50000);
                         };
                      };
 
                   }else{
-                     for (var i=0;i<hhAr.length;i++){hhAr[i].del();};
+                     for (var i=0;i<hhAr.length;i++){hhAr[i].del();}; hhAr=[];
+                     for (var i=0;i<hhAv.length;i++){hhAv[i].del();}; hhAv=[];
+                      
                      SelectItem=0;
                      
                      var SelHex=FindXY(point);
@@ -288,13 +293,15 @@ function LevelItem(ItemStr){
   return 100+LevelNo(ItemStr)*100;
 };
 
-function Sel_Item(x, y){
-  var pt=ChangeXY(xt,yt);
+function Sel_Item(x, y, SelectItemColor){
+  var pt=ChangeXY(x,y);
   var lvl=LevelNo(Arena[x][y])-1;
+  if (lvl<0){lvl=0;};
+  var lvl1=170+lvl*100;
   pt.x=pt.x+lvl*lvl_x;
   pt.y=pt.y+lvl*lvl_y;
   var hh=Hexagon(pt, Size);
-  hh.opacity(0.7).color(SelectItemColor).lineStyle({lineWidth:6});
+  hh.opacity(0.9).color(SelectItemColor).lineStyle({lineWidth:4}).level(lvl1);
   return hh;                     
 };
 
@@ -380,9 +387,9 @@ function NextMove(){
   NoMove++;
 
   if (NoMove%2==0){
-    $('#ColorItem').text("Black");
+    $('#ColorItem').html('<span style="background: #000000; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:white;">Black</span>');
   }else{
-    $('#ColorItem').text("White");
+    $('#ColorItem').html('<span style="background: #ffffff; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:black;">White</span>');
   };
 
 };
@@ -398,6 +405,26 @@ function SameColor(NoMove, ItemStr){
 };
 
 
+
+function AvailableCells(ItemStr, x, y){
+  return BoardCells(x, y);
+}; 
+
+
+function SelectAvail(arr){
+ var ar=[];
+ var x,y;
+ for (var i=0;i<arr.length;i++){
+        x=arr[i][0];
+        y=arr[i][1];
+        if ((x>=0) && (y>=0)){
+           ar.push(Sel_Item(x, y, SelectAvailItem));
+        };
+      };
+ return ar;
+};
+
+
 function SelectAll(arr){
  var xi,yi;
  for (var i=0;i<arr.length;i++){
@@ -410,10 +437,6 @@ function SelectAll(arr){
 
 };
 
-
-function AvailableCells(ItemStr, x, y){
-  return BoardCells(x, y);
-}; 
 
 
 function InitItems(){
