@@ -34,7 +34,7 @@ var NoMove=1;
 var Arena=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 var ArenaObj=[];
 var ItemCoord=[];
-
+var AvCells=[];
 var SelectItem=0;
 
 var xt=0;
@@ -72,24 +72,34 @@ function Init()
                      
                      if (Arena[xt][yt]!=undefined && Arena[xt][yt]!=''){
 
-                        as=Arena[xt][yt];
-                        xt_1=xt;
-                        yt_1=yt;
-                        hhAr.push(Sel_Item(xt, yt));
+                        if (SameColor(NoMove,Arena[xt][yt])){
+                        
+                          as=Arena[xt][yt];
+                          xt_1=xt;
+                          yt_1=yt;
+                          hhAr.push(Sel_Item(xt, yt));
                        
-                        SelectItem=1;
+                          SelectItem=1;
+                          AvCells=AvailableCells(as, xt, yt); 
+                          SelectAll(AvCells);
+                        };
                      };
 
                   }else{
                      for (var i=0;i<hhAr.length;i++){hhAr[i].del();};
                      SelectItem=0;
+                     
                      var SelHex=FindXY(point);
                      xt=SelHex.x;
                      yt=SelHex.y;
-                     MoveItem(Arena[xt_1][yt_1], xt, yt);
-                     if (Arena[xt_1][yt_1]!=as){
-                        NextMove();
-                     }
+                     
+                     if ( inArray([xt,yt], AvCells) >-1){
+                       MoveItem(Arena[xt_1][yt_1], xt, yt);
+
+                       if (Arena[xt_1][yt_1]!=as){
+                          NextMove();
+                       };
+                     };
 
                   };
 
@@ -170,6 +180,26 @@ Point.prototype.x = null;
 Point.prototype.y = null;
 
 
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+
+    return true;
+}
+
+function inArray(elem,array)
+{
+var len = array.length;
+for(var i = 0 ; i < len;i++)
+{
+    if(arraysEqual(array[i], elem)){return i;}
+}
+return -1;
+} 
 
 
 function Hexagon(point, size){
@@ -343,6 +373,9 @@ function RemoveString(ItemStr, x, y){
 
 
 
+
+
+
 function NextMove(){
   NoMove++;
 
@@ -352,12 +385,17 @@ function NextMove(){
     $('#ColorItem').text("White");
   };
 
-
-}
-
+};
 
 
+function SameColor(NoMove, ItemStr){
 
+  if ((NoMove%2==0 && ItemStr.substr(0,1)=='b') || (NoMove%2==1 && ItemStr.substr(0,1)=='w')){
+    return true;
+  }else{
+    return false;
+  };
+};
 
 
 function SelectAll(arr){
@@ -366,15 +404,16 @@ function SelectAll(arr){
         xi=arr[i][0];
         yi=arr[i][1];
         if ((xi>=0) && (yi>=0)){
-           a=ChangeXY(xi, yi);
-           HexagonFill(a[0], a[1], Size, '#0f0f0f');
+           HexagonFill(ChangeXY(xi, yi), Size, '#f1010f', 50);
         };
       };
 
 };
 
 
-
+function AvailableCells(ItemStr, x, y){
+  return BoardCells(x, y);
+}; 
 
 
 function InitItems(){
