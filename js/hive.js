@@ -24,7 +24,8 @@ var BlackItem='#000000';
 var lvl_x=Size/12;
 var lvl_y=-Size/6;
 
-
+var startx=7;
+var starty=8;
 
 
 
@@ -47,6 +48,9 @@ var as='';
 var xt_1, yt_1;
 
 var hh;
+
+var ABC=[];
+var ABCtemp=[];
 var hhAr=[];
 var hhAv=[];
 
@@ -126,11 +130,11 @@ function Init()
 
 
 
-     for (var i = -1; i < SizeX; i++) {
-         for (var j = 3; j < SizeY; j++) {
-             hh=Hexagon(ChangeXY(i,j), Size).opacity(0.2).level(50).color('#9c9f84');
-         }
-      }
+     // for (var i = -1; i < SizeX; i++) {
+     //     for (var j = 3; j < SizeY; j++) {
+     //         hh=Hexagon(ChangeXY(i,j), Size).opacity(0.2).level(50).color('#9c9f84');
+     //     }
+     //  }
 
  
 
@@ -196,8 +200,7 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
-function inArray(elem,array)
-{
+function inArray(elem,array){
 var len = array.length;
 for(var i = 0 ; i < len;i++)
 {
@@ -306,6 +309,18 @@ function Sel_Item(x, y, SelectItemColor){
 };
 
 
+function Sel_Item1(x, y, SelectItemColor){
+  var pt=ChangeXY(x,y);
+  var lvl=LevelNo(Arena[x][y])-1;
+  if (lvl<0){lvl=0;};
+  var lvl1=170+lvl*100;
+  pt.x=pt.x+lvl*lvl_x;
+  pt.y=pt.y+lvl*lvl_y;
+  var hh=Hexagon(pt, Size);
+  hh.opacity(0.5).color(SelectItemColor).lineStyle({lineWidth:2}).level(lvl1);
+  return hh;                     
+};
+
 function TransTo(Objs, dx, dy, lvl){
   for (var i=0;i<Objs.length;i++){
      var point=Objs[i].position();
@@ -398,7 +413,11 @@ function NextMove(){
 function SameColor(NoMove, ItemStr){
 
   if ((NoMove%2==0 && ItemStr.substr(0,1)=='b') || (NoMove%2==1 && ItemStr.substr(0,1)=='w')){
-    return true;
+    if ((NoMove<=2)&&(ItemStr.substr(1,2)=='QB')){
+      return false;
+    }else{
+      return true;
+    };
   }else{
     return false;
   };
@@ -406,9 +425,58 @@ function SameColor(NoMove, ItemStr){
 
 
 
+
+
+
+
+
+
+
+
+
+
 function AvailableCells(ItemStr, x, y){
-  return BoardCells(x, y);
+  var ar=[];
+  if (NoMove==1){ar=[[startx, starty]]};
+  if (NoMove==2){ar=BoardCells(startx, starty)};
+  if (NoMove>2){
+    ABC=[];
+    ABCtemp=[];
+
+    if ((Arena[startx][starty]!="")&&(Arena[startx][starty]!=undefined)){
+      ar=AllBoardCells(startx, starty);
+    };
+
+  };
+  return ar;
 }; 
+
+
+
+
+function AllBoardCells(x, y){
+  var x1,y1;
+  var ar=BoardCells(x, y);
+  for (var i=0;i<ar.length;i++){
+    x1=ar[i][0];
+    y1=ar[i][1];
+    if ((Arena[x1][y1]!="")&&(Arena[x1][y1]!=undefined)){
+      if (inArray([x1, y1], ABCtemp)==-1) {
+        ABCtemp.push([x1, y1]);
+        // ABC=ABC.concat(AllBoardCells(x1, y1));
+        AllBoardCells(x1, y1);
+      };
+    }else{
+      if (inArray([x1, y1], ABC)==-1) {ABC.push([x1, y1]);}
+    };
+  };
+
+  return ABC;
+};
+
+
+
+
 
 
 function SelectAvail(arr){
@@ -418,7 +486,7 @@ function SelectAvail(arr){
         x=arr[i][0];
         y=arr[i][1];
         if ((x>=0) && (y>=0)){
-           ar.push(Sel_Item(x, y, SelectAvailItem));
+           ar.push(Sel_Item1(x, y, SelectAvailItem));
         };
       };
  return ar;
@@ -436,6 +504,24 @@ function SelectAll(arr){
       };
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
