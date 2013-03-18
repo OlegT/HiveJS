@@ -85,17 +85,31 @@ function Init()
                           hhAr.push(Sel_Item(xt, yt, SelectItemColor));
                        
                           SelectItem=1;
-                          AvCells=AvailableCells(as, xt, yt); 
+
+                          if (yt<2){
+                            AvCells=AvailableCells(as, xt, yt); 
+                          }else{
+                            AvCells=BoardCells(xt, yt); 
+                          };
+
                           hhAv=SelectAvail(AvCells);
 
                           hhAr[0].level(50000);
+
+                          // No variants
+                          if (hhAv===[]) {
+                            for (var i=0;i<hhAr.length;i++){hhAr[i].del();}; hhAr=[];
+                            for (var i=0;i<hhAv.length;i++){hhAv[i].del();}; hhAv=[];
+                            SelectItem=0;
+                          };
+
                         };
                      };
 
                   }else{
+                     
                      for (var i=0;i<hhAr.length;i++){hhAr[i].del();}; hhAr=[];
                      for (var i=0;i<hhAv.length;i++){hhAv[i].del();}; hhAv=[];
-                      
                      SelectItem=0;
                      
                      var SelHex=FindXY(point);
@@ -416,7 +430,9 @@ function SameColor(NoMove, ItemStr){
     if ((NoMove<=2)&&(ItemStr.substr(1,2)=='QB')){
       return false;
     }else{
+      
       return true;
+    
     };
   }else{
     return false;
@@ -437,15 +453,21 @@ function SameColor(NoMove, ItemStr){
 
 function AvailableCells(ItemStr, x, y){
   var ar=[];
+  var x,y;
   if (NoMove==1){ar=[[startx, starty]]};
   if (NoMove==2){ar=BoardCells(startx, starty)};
   if (NoMove>2){
     ABC=[];
     ABCtemp=[];
-
-    if ((Arena[startx][starty]!="")&&(Arena[startx][starty]!=undefined)){
-      ar=AllBoardCells(startx, starty);
+    
+    x=startx;
+    y=starty; 
+    
+    if ((Arena[x][y]=="")||(Arena[x][y]==undefined)){
+      x=ItemCoord[01][0];
+      y=ItemCoord[01][1];
     };
+    ar=AllBoardCells(x, y);
 
   };
   return ar;
