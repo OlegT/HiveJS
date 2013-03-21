@@ -49,28 +49,47 @@ var xt_1, yt_1;
 
 var hh;
 
+
+var mouseClick=false;
+var x_old;
+var y_old;
+
+
 var ABC=[];
 var ABCtemp=[];
 var hhAr=[];
 var hhAv=[];
+var img=[];
 
 //var qbiiim;
+// $(function() {
+//   jc.start(idCanvas,true);
+//   //InitItems();
+//   Init();
+   
+// })
+
 
 function Init()
  {
             
             
             jc.start(idCanvas,true);
-            //var text=jc.text("",50,50);
+            var text=jc.text("",50,100);
            
             
             jc.rect(0,0,CanvasX,CanvasY,'#f7dcb4',1)  //#a97d5d #cdb7b5 F7DCB4
               .mousedown(function(point){
               //  this.color('#ff0000');
-              //  text.string('x='+point.x+', y='+point.y);
-              //  text.up('top');
-                  
+                // text.string('x='+point.x+', y='+point.y);
+                // text.up('top');
+                  mouseClick=true;
+                  x_old=point.x;
+                  y_old=point.y;
+
+
                   if (SelectItem==0){
+
                      var SelHex=FindXY(point);
                      xt=SelHex.x;
                      yt=SelHex.y;
@@ -103,6 +122,8 @@ function Init()
                             SelectItem=0;
                           };
 
+                          mouseClick=false;
+
                         };
                      };
 
@@ -122,6 +143,9 @@ function Init()
                        if (Arena[xt_1][yt_1]!=as){
                           NextMove();
                        };
+
+                       mouseClick=false;
+
                      };
 
                   };
@@ -131,10 +155,28 @@ function Init()
                 
                 })
               .mouseup(function(point){
-                
+                mouseClick=false;
                 })
               .mousemove(function(point){
-                
+                if (mouseClick) {
+                    
+                    var dx=point.x-x_old;
+                    var dy=point.y-y_old;
+
+                    // text.string('dx='+dx+', dy='+dy);
+                    // text.up('top');
+
+                    for(var i=1; i<12;i++){TransTo1(ArenaObj[i],dx,dy);};
+                    for(var i=21;i<32;i++){TransTo1(ArenaObj[i],dx,dy);};
+                    
+                    x0=x0+dx;
+                    y0=y0+dy; 
+
+                    x_old=point.x;
+                    y_old=point.y;
+
+                }
+
                 });
 
 
@@ -159,28 +201,28 @@ function Init()
       //1 player (White)
       MoveItem("wQB01",0,0);
       MoveItem("wBE02",1,0);
-      MoveItem("wBE03",0,1);
+      MoveItem("wBE03",1,0);
       MoveItem("wGR04",2,0);
-      MoveItem("wGR05",3,0);
-      MoveItem("wGR06",1,1);
-      MoveItem("wAN07",2,1);
-      MoveItem("wAN08",3,1);
-      MoveItem("wAN09",4,0);
-      MoveItem("wSP10",5,0);
-      MoveItem("wSP11",4,1);
+      MoveItem("wGR05",2,0);
+      MoveItem("wGR06",2,0);
+      MoveItem("wAN07",3,0);
+      MoveItem("wAN08",3,0);
+      MoveItem("wAN09",3,0);
+      MoveItem("wSP10",4,0);
+      MoveItem("wSP11",4,0);
 
       //2 player (Black)
       MoveItem("bQB21", 7,0);
       MoveItem("bBE22", 8,0);
-      MoveItem("bBE23", 7,1);
+      MoveItem("bBE23", 8,0);
       MoveItem("bGR24", 9,0);
-      MoveItem("bGR25",10,0);
-      MoveItem("bGR26", 8,1);
-      MoveItem("bAN27", 9,1);
-      MoveItem("bAN28",10,1);
-      MoveItem("bAN29",11,0);
-      MoveItem("bSP30",12,0);
-      MoveItem("bSP31",11,1);
+      MoveItem("bGR25", 9,0);
+      MoveItem("bGR26", 9,0);
+      MoveItem("bAN27",10,0);
+      MoveItem("bAN28",10,0);
+      MoveItem("bAN29",10,0);
+      MoveItem("bSP30",11,0);
+      MoveItem("bSP31",11,0);
 
 
 
@@ -247,8 +289,8 @@ function HexagonFill(point, size, colorRGB, lvl){
 
 
 function FindXY(point){
-     xt=Math.round(point.x/(sqrt3*Size)-1);
-     yt=Math.round(-1+point.y/(1.5*Size));
+     xt=Math.round((point.x+sqrt3*Size/2-x0)/(sqrt3*Size)-1);
+     yt=Math.round(-1+(point.y+Size-y0)/(1.5*Size));
      if (xt<0){xt=0;};
      if (yt<0){yt=0;};
      var arr=BoardCells(xt, yt);
@@ -335,11 +377,19 @@ function Sel_Item1(x, y, SelectItemColor){
   return hh;                     
 };
 
+
 function TransTo(Objs, dx, dy, lvl){
   for (var i=0;i<Objs.length;i++){
      var point=Objs[i].position();
      Objs[i].translateTo(point.x+dx, point.y+dy);
      Objs[i].level(lvl+i);
+  };
+};
+
+function TransTo1(Objs, dx, dy){
+  for (var i=0;i<Objs.length;i++){
+     var point=Objs[i].position();
+     Objs[i].translateTo(point.x+dx, point.y+dy);
   };
 };
 
@@ -549,10 +599,10 @@ function SelectAll(arr){
 
 function InitItems(){
   var xx,yy,No,lvl;      
-  var img=[];
+
         //1 player (White)
           
-            
+            jc.start(idCanvas,true);
             //QB
             xx=2;yy=2;No=1;
             ItemCoord[No]=[xx, yy];
@@ -565,9 +615,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7, Size*1.2,Size*1.4).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/QB.gif";
 
@@ -584,9 +639,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+                    
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
@@ -605,9 +665,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
@@ -626,9 +691,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/GR.gif";
 
@@ -645,9 +715,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));
                   }; 
                  img[No].src="img/GR.gif";
 
@@ -664,9 +739,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=2;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/GR.gif";
 
@@ -683,9 +763,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/AN.gif";
 
@@ -702,9 +787,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/AN.gif";
 
@@ -721,9 +811,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=2;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/AN.gif";
 
@@ -740,9 +835,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/SP.gif";
 
@@ -759,9 +859,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/SP.gif";
 
@@ -782,9 +887,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/QBb.gif";
 
@@ -801,9 +911,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/BEb.gif";
 
@@ -820,9 +935,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/BEb.gif";
 
@@ -839,9 +959,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/GRb.gif";
 
@@ -858,9 +983,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/GRb.gif";
 
@@ -877,9 +1007,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=2;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/GRb.gif";
 
@@ -896,9 +1031,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/ANb.gif";
 
@@ -915,9 +1055,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/ANb.gif";
 
@@ -934,9 +1079,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=2;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/ANb.gif";
  
@@ -953,9 +1103,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=0;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/SPb.gif";
 
@@ -972,9 +1127,14 @@ function InitItems(){
                     xx=ItemCoord[No][0];
                     yy=ItemCoord[No][1];
                     var a=ChangeXY(xx,yy);
+
+                    var lvl1=1;
+                    a.x=a.x+lvl1*lvl_x;
+                    a.y=a.y+lvl1*lvl_y;
+
                     lvl=ArenaObj[No][2].level();
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
-                    ArenaObj[No].push(Hexagon(ChangeXY(xx,yy), Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
+                    ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
                  img[No].src="img/SPb.gif";
 
