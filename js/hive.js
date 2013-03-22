@@ -105,7 +105,7 @@ function Init()
                        
                           SelectItem=1;
 
-                          if (yt<2){
+                          if (yt<1){
                             AvCells=AvailableCells(as, xt, yt); 
                           }else{
                             AvCells=BoardCells(xt, yt); 
@@ -550,8 +550,28 @@ function AvailableCells(ItemStr, x, y){
       x=ItemCoord[01][0];
       y=ItemCoord[01][1];
     };
-    ar=AllBoardCells(x, y);
-
+    ar1=AllBoardCells(x, y);
+    
+    var ar=[];
+    
+    for (var i=0; i<ar1.length; i++){
+      var p=ar1[i];
+      var ab=BoardCells(p[0], p[1]);
+      for (var j=0; j<ab.length; j++){
+        var pr=true;
+        var ic=Arena[ab[j][0]][ab[j][1]];
+        if (ic!=undefined && ic!=''){
+          if (ItemStr.substr(0,1)!=ic.substr(0,1)){
+            pr=false;
+            break;
+          };
+        };
+      };
+      if (pr) {
+        ar.push(ar1[i]);
+      };
+    
+    }; 
   };
   return ar;
 }; 
