@@ -6,8 +6,8 @@ var SizeY = 21;//21;
 
 var sqrt3=Math.sqrt(3);
 
-var x0 = sqrt3*Size/2;
-var y0 = Size;
+var x0 = Size/2+sqrt3*Size/2-Size*16;
+var y0 = Size*1.5-Size*10;
 var idCanvas='canvas'
 
 var CanvasX=650;
@@ -24,8 +24,8 @@ var BlackItem='#000000';
 var lvl_x=Size/12;
 var lvl_y=-Size/6;
 
-var startx=7;
-var starty=8;
+var startx=15;
+var starty=15;
 
 
 
@@ -78,7 +78,7 @@ function Init()
             var text=jc.text("",50,100);
            
             
-            jc.rect(0,0,CanvasX,CanvasY,'#f7dcb4',1)  //#a97d5d #cdb7b5 F7DCB4
+            jc.rect(0,0,CanvasX,CanvasY,'#f7dcb4',1).level(10)  //#a97d5d #cdb7b5 F7DCB4
               .mousedown(function(point){
               //  this.color('#ff0000');
                 // text.string('x='+point.x+', y='+point.y);
@@ -166,8 +166,14 @@ function Init()
                     // text.string('dx='+dx+', dy='+dy);
                     // text.up('top');
 
-                    for(var i=1; i<12;i++){TransTo1(ArenaObj[i],dx,dy);};
-                    for(var i=21;i<32;i++){TransTo1(ArenaObj[i],dx,dy);};
+                    for(var i=1; i<35;i++){
+                      if (ArenaObj[i]!=undefined){
+                        if (ItemCoord[i][1]>0){
+                          TransTo1(ArenaObj[i],dx,dy);
+                        };
+                      };
+                    };
+                    
                     
                     x0=x0+dx;
                     y0=y0+dy; 
@@ -193,7 +199,7 @@ function Init()
      //  }
 
  
-
+      jc.rect(0,0,CanvasX,Size*3,'#a97d5d',1).level(2000);
             
       
       InitItems();
@@ -212,20 +218,29 @@ function Init()
       MoveItem("wSP11",4,0);
 
       //2 player (Black)
-      MoveItem("bQB21", 7,0);
-      MoveItem("bBE22", 8,0);
-      MoveItem("bBE23", 8,0);
-      MoveItem("bGR24", 9,0);
-      MoveItem("bGR25", 9,0);
-      MoveItem("bGR26", 9,0);
-      MoveItem("bAN27",10,0);
-      MoveItem("bAN28",10,0);
-      MoveItem("bAN29",10,0);
-      MoveItem("bSP30",11,0);
-      MoveItem("bSP31",11,0);
+      MoveItem("bQB21", 8,0);
+      MoveItem("bBE22", 9,0);
+      MoveItem("bBE23", 9,0);
+      MoveItem("bGR24",10,0);
+      MoveItem("bGR25",10,0);
+      MoveItem("bGR26",10,0);
+      MoveItem("bAN27",11,0);
+      MoveItem("bAN28",11,0);
+      MoveItem("bAN29",11,0);
+      MoveItem("bSP30",12,0);
+      MoveItem("bSP31",12,0);
 
 
-
+      for(var i=1; i<35;i++){
+        var Objs=ArenaObj[i];
+        if (Objs!=undefined){
+          if (ItemCoord[i][1]==0){
+              for (var j=0;j<Objs.length;j++){
+               Objs[j].level(Objs[j].level()+2000);
+              };
+          };
+        };
+      };
 
 
 
@@ -289,26 +304,36 @@ function HexagonFill(point, size, colorRGB, lvl){
 
 
 function FindXY(point){
-     xt=Math.round((point.x+sqrt3*Size/2-x0)/(sqrt3*Size)-1);
-     yt=Math.round(-1+(point.y+Size-y0)/(1.5*Size));
-     if (xt<0){xt=0;};
-     if (yt<0){yt=0;};
-     var arr=BoardCells(xt, yt);
-     arr.push([xt, yt]);
-     //-------
-     //  SelectAll(arr);
-     //-------
-     var d=Size*Size*Size*100;
-     var xi,yi,dd, a;
-     for (var i=0;i<arr.length;i++){
-        xi=arr[i][0];
-        yi=arr[i][1];
-        if ((xi>=0) && (yi>=0)){
-           a=ChangeXY(xi, yi);
-           dd=dist(a.x,a.y, point.x,point.y);
-           if (dd<d){d=dd;xt=xi;yt=yi};
+     if (point.y>3*Size){
+       x0_=x0;
+       y0_=y0; 
+     }else{
+       x0_=(sqrt3+1)*Size/2;
+       y0_=1.5*Size; 
+     };
+
+
+       xt=Math.round((point.x+sqrt3*Size/2-x0_)/(sqrt3*Size)-1);
+       yt=Math.round(-1+(point.y+Size-y0_)/(1.5*Size));
+       if (xt<0){xt=0;};
+       if (yt<0){yt=0;};
+       var arr=BoardCells(xt, yt);
+       arr.push([xt, yt]);
+       //-------
+       //  SelectAll(arr);
+       //-------
+       var d=Size*Size*Size*100;
+       var xi,yi,dd, a;
+       for (var i=0;i<arr.length;i++){
+          xi=arr[i][0];
+          yi=arr[i][1];
+          if ((xi>=0) && (yi>=0)){
+             a=ChangeXY(xi, yi);
+             dd=dist(a.x,a.y, point.x,point.y);
+             if (dd<d){d=dd;xt=xi;yt=yi};
+          };
         };
-      };
+     
      return new Point(xt, yt);
 };
 
@@ -318,11 +343,19 @@ function dist(x1, y1, x2, y2){
 };
 
 function ChangeXY(i, j){
-  yc=y0+ Size*j*1.5;
+  if (j>0){
+       x0_=x0;
+       y0_=y0; 
+     }else{
+       x0_=(sqrt3+1)*Size/2;
+       y0_=1.5*Size; 
+     };
+
+  yc=y0_+ Size*j*1.5;
   if (j % 2 == 0) {
-                 xc=x0+i*sqrt3*Size;
+                 xc=x0_+i*sqrt3*Size;
              } else {
-                 xc=x0+0.5*sqrt3*Size+i*sqrt3*Size;
+                 xc=x0_+0.5*sqrt3*Size+i*sqrt3*Size;
              }
   return new Point(xc, yc);          
 };
@@ -388,8 +421,8 @@ function TransTo(Objs, dx, dy, lvl){
 
 function TransTo1(Objs, dx, dy){
   for (var i=0;i<Objs.length;i++){
-     var point=Objs[i].position();
-     Objs[i].translateTo(point.x+dx, point.y+dy);
+       var point=Objs[i].position();
+       Objs[i].translateTo(point.x+dx, point.y+dy);
   };
 };
 
