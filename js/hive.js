@@ -104,11 +104,13 @@ function Init()
                           hhAr.push(Sel_Item(xt, yt, SelectItemColor));
                        
                           SelectItem=1;
-
+                          AvCells=[];
                           if (yt<1){
                             AvCells=AvailableCells(as, xt, yt); 
                           }else{
-                            AvCells=AvailableMoves(as, xt, yt); 
+                            if ((NoMove%2==1 && ItemCoord[01][1]>0) || (NoMove%2==0 && ItemCoord[21][1]>0)){
+                              AvCells=AvailableMoves(as, xt, yt); 
+                            };
                           };
 
                           hhAv=SelectAvail(AvCells);
@@ -116,7 +118,7 @@ function Init()
                           hhAr[0].level(50000);
 
                           // No variants
-                          if (hhAv===[]) {
+                          if (hhAv.length==0) {
                             for (var i=0;i<hhAr.length;i++){hhAr[i].del();}; hhAr=[];
                             for (var i=0;i<hhAv.length;i++){hhAv[i].del();}; hhAv=[];
                             SelectItem=0;
@@ -513,9 +515,11 @@ function SameColor(NoMove, ItemStr){
     if ((NoMove<=2)&&(ItemStr.substr(1,2)=='QB')){
       return false;
     }else{
-      
-      return true;
-    
+      if ((NoMove==7)&&(NoItem(ItemStr)!=1)&&(ItemCoord[01][1]==0)){
+        return false;
+      }else{
+        return true;
+      };
     };
   }else{
     return false;
@@ -549,23 +553,39 @@ function AvailableMoves(ItemStr, x, y){
   var x1=startx;
   var y1=starty; 
   var ar=[];
-  if ((Arena[x1][y1]=="")||(Arena[x1][y1]==undefined)){
-    x1=ItemCoord[01][0];
-    y1=ItemCoord[01][1];
+  if (NoItem(ItemStr)==1){
+    for (var i=ItemCoord.length-1; i>0; i--){
+      if (ItemCoord[i]!=undefined){
+        if (ItemCoord[i][1]>0){
+          x1=ItemCoord[i][0];
+          y1=ItemCoord[i][1];
+          break;
+        };
+      };
+    };
+  }else{
+    if ((Arena[x1][y1]=="")||(Arena[x1][y1]==undefined)){
+      x1=ItemCoord[01][0];
+      y1=ItemCoord[01][1];
+    };
   };
   ar=AllBoardCells(x1, y1);
   AddString(ItemStr, x, y)
   
   if (count1<=ABCtemp.length+1){
-     return BoardCells(x, y);
+    // Yes. Item can move.
+    if (ItemStr.substr(1,2)=='AN'){
+      return AllBoardCells(x, y);
+    };
+
+
+
+    return BoardCells(x, y);
 
    }else{
+    // No. Item can move.
     return [];
   };
-
-
-  
-  
 };
 
 
