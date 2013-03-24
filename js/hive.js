@@ -108,7 +108,7 @@ function Init()
                           if (yt<1){
                             AvCells=AvailableCells(as, xt, yt); 
                           }else{
-                            AvCells=BoardCells(xt, yt); 
+                            AvCells=AvailableMoves(as, xt, yt); 
                           };
 
                           hhAv=SelectAvail(AvCells);
@@ -527,16 +527,54 @@ function SameColor(NoMove, ItemStr){
 
 
 
+function AvailableMoves(ItemStr, x, y){
+  //can move item?
+  ItemStr=ItemStr.substr(0,5);
+  var count1=0;
+
+  for (var i=0;i<ItemCoord.length;i++){
+    if (ItemCoord[i+1]!=undefined){
+      if (ItemCoord[i+1][1]>0){
+       count1++;
+       if (NoItem(Arena[ItemCoord[i+1][0]][ItemCoord[i+1][1]])!=(i+1)){
+         count1--;
+       };
+      };
+    };
+  };
+  
+  RemoveString(ItemStr, x, y);
+  ABC=[];
+  ABCtemp=[];
+  var x1=startx;
+  var y1=starty; 
+  var ar=[];
+  if ((Arena[x1][y1]=="")||(Arena[x1][y1]==undefined)){
+    x1=ItemCoord[01][0];
+    y1=ItemCoord[01][1];
+  };
+  ar=AllBoardCells(x1, y1);
+  AddString(ItemStr, x, y)
+  
+  if (count1<=ABCtemp.length+1){
+     return BoardCells(x, y);
+
+   }else{
+    return [];
+  };
 
 
+  
+  
+};
 
 
 
 
 
 function AvailableCells(ItemStr, x, y){
-  var ar=[];
-  var x,y;
+  var ar1=[];
+  
   if (NoMove==1){ar=[[startx, starty]]};
   if (NoMove==2){ar=BoardCells(startx, starty)};
   if (NoMove>2){
