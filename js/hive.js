@@ -526,13 +526,55 @@ function SameColor(NoMove, ItemStr){
   };
 };
 
-
+function BoardEmpty(ar, i, x, y){
+  var x1,y1,x2,y2;
+  var ar1=BoardCells(ar[i][0],ar[i][1]);
+  var pr=false;
+  for (var j=0; j<ar1.length; j++){
+    if ((ar1[j][0]!=x)||(ar1[j][1]!=y)){
+      if ((Arena[ar1[j][0]][ar1[j][1]]!=undefined)&&(Arena[ar1[j][0]][ar1[j][1]]!=undefined)){
+        pr=true;
+        break;
+      };
+    };
+  };
+  if (pr){
+    var n=ar.length-1;
+    if (i==0){
+      x1=ar[i+1][0];
+      y1=ar[i+1][1];
+      x2=ar[n][0];
+      y2=ar[n][1]; 
+    }else{ 
+      if(i==n){
+        x1=ar[n-1][0];
+        y1=ar[n-1][1];
+        x2=ar[0][0];
+        y2=ar[0][1]; 
+      }else{
+        x1=ar[i-1][0];
+        y1=ar[i-1][1];
+        x2=ar[i+1][0];
+        y2=ar[i+1][1]; 
+      };
+    };
+    if ((Arena[x1][y1]==undefined)||(Arena[x1][y1]=='')||(Arena[x2][y2]==undefined)||(Arena[x2][y2]=='')){
+      return true;
+    }else{
+      return false;
+    };
+  }else{
+    return false;
+  };
+};
 
 
 
 
 function AvailableMoves(ItemStr, x, y){
   //can move item?
+  var ItemStrTemp=ItemStr;
+
   ItemStr=ItemStr.substr(0,5);
   var count1=0;
 
@@ -574,10 +616,28 @@ function AvailableMoves(ItemStr, x, y){
   
   if (count1<=ABCtemp.length+1){
     // Yes. Item can move.
+    
     if (ItemStr.substr(1,2)=='AN'){
-      return AllBoardCells(x, y);
+      return AllBoardCells(x1, y1);
     };
+    
+    if (ItemStr.substr(1,2)=='BE'){
+       ar=BoardCells(x, y);
+       var ar1=[];
+       for (var i=0; i<ar.length; i++){
+         var x1=ar[i][0];
+         var y1=ar[i][1];
+         if ((Arena[x1][y1]!="")&&(Arena[x1][y1]!=undefined)){
+           ar1.push(ar[i]);
+         }else{
+           if (((BoardEmpty(ar,i,x,y))&&(ItemStrTemp.length==5))||(ItemStrTemp.length>5)){
+             ar1.push(ar[i]);
+           };
+         };
+       };
 
+      return ar1;
+    };
 
 
     return BoardCells(x, y);
