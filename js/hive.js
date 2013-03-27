@@ -94,7 +94,7 @@ function Init()
                      xt=SelHex.x;
                      yt=SelHex.y;
                      
-                     if (Arena[xt][yt]!=undefined && Arena[xt][yt]!=''){
+                     if (!Empt(xt,yt)){
 
                         if (SameColor(NoMove,Arena[xt][yt])){
                         
@@ -362,6 +362,14 @@ function ChangeXY(i, j){
   return new Point(xc, yc);          
 };
 
+function Empt(x, y){
+  if ((Arena[x][y]==undefined)||(Arena[x][y]=='')){
+    return true;
+  }else{
+    return false;
+  };
+};
+
 
 function BoardCells(x, y){
   if (y % 2 == 0){
@@ -526,19 +534,8 @@ function SameColor(NoMove, ItemStr){
   };
 };
 
-function BoardEmpty(ar, i, x, y){
+function BoardEmpty(ar, i){
   var x1,y1,x2,y2;
-  var ar1=BoardCells(ar[i][0],ar[i][1]);
-  var pr=false;
-  for (var j=0; j<ar1.length; j++){
-    if ((ar1[j][0]!=x)||(ar1[j][1]!=y)){
-      if ((Arena[ar1[j][0]][ar1[j][1]]!=undefined)&&(Arena[ar1[j][0]][ar1[j][1]]!=undefined)){
-        pr=true;
-        break;
-      };
-    };
-  };
-  if (pr){
     var n=ar.length-1;
     if (i==0){
       x1=ar[i+1][0];
@@ -558,14 +555,11 @@ function BoardEmpty(ar, i, x, y){
         y2=ar[i+1][1]; 
       };
     };
-    if ((Arena[x1][y1]==undefined)||(Arena[x1][y1]=='')||(Arena[x2][y2]==undefined)||(Arena[x2][y2]=='')){
+    if ((Empt(x1,y1)&&!Empt(x2,y2))||(Empt(x2,y2)&&!Empt(x1,y1))){
       return true;
     }else{
       return false;
     };
-  }else{
-    return false;
-  };
 };
 
 
@@ -606,7 +600,7 @@ function AvailableMoves(ItemStr, x, y){
       };
     };
   }else{
-    if ((Arena[x1][y1]=="")||(Arena[x1][y1]==undefined)){
+    if (Empt(x1,y1)){
       x1=ItemCoord[01][0];
       y1=ItemCoord[01][1];
     };
@@ -617,20 +611,36 @@ function AvailableMoves(ItemStr, x, y){
   if (count1<=ABCtemp.length+1){
     // Yes. Item can move.
     
+    //QB
+    if (ItemStr.substr(1,2)=='QB'){
+       ar=BoardCells(x, y);
+       var ar1=[];
+       for (var i=0; i<ar.length; i++){
+         var x1=ar[i][0];
+         var y1=ar[i][1];
+         if (Empt(x1,y1)&&BoardEmpty(ar,i)){
+           ar1.push(ar[i]);
+         };
+       };
+      return ar1;
+    };
+  
+    //AN   TO DO
     if (ItemStr.substr(1,2)=='AN'){
       return AllBoardCells(x1, y1);
     };
-    
+       
+    //BE
     if (ItemStr.substr(1,2)=='BE'){
        ar=BoardCells(x, y);
        var ar1=[];
        for (var i=0; i<ar.length; i++){
          var x1=ar[i][0];
          var y1=ar[i][1];
-         if ((Arena[x1][y1]!="")&&(Arena[x1][y1]!=undefined)){
+         if (!Empt(x1,y1)){
            ar1.push(ar[i]);
          }else{
-           if (((BoardEmpty(ar,i,x,y))&&(ItemStrTemp.length==5))||(ItemStrTemp.length>5)){
+           if (((BoardEmpty(ar,i))&&(ItemStrTemp.length==5))||(ItemStrTemp.length>5)){
              ar1.push(ar[i]);
            };
          };
@@ -639,7 +649,7 @@ function AvailableMoves(ItemStr, x, y){
       return ar1;
     };
 
-
+    //DELETE THIS
     return BoardCells(x, y);
 
    }else{
@@ -664,7 +674,7 @@ function AvailableCells(ItemStr, x, y){
     x=startx;
     y=starty; 
     
-    if ((Arena[x][y]=="")||(Arena[x][y]==undefined)){
+    if (Empt(x,y)){
       x=ItemCoord[01][0];
       y=ItemCoord[01][1];
     };
@@ -703,7 +713,7 @@ function AllBoardCells(x, y){
   for (var i=0;i<ar.length;i++){
     x1=ar[i][0];
     y1=ar[i][1];
-    if ((Arena[x1][y1]!="")&&(Arena[x1][y1]!=undefined)){
+    if (!Empt(x1,y1)){
       if (inArray([x1, y1], ABCtemp)==-1) {
         ABCtemp.push([x1, y1]);
         // ABC=ABC.concat(AllBoardCells(x1, y1));
