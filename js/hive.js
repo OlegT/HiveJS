@@ -416,7 +416,7 @@ function Sel_Item1(x, y, SelectItemColor){
   pt.x=pt.x+lvl*lvl_x;
   pt.y=pt.y+lvl*lvl_y;
   var hh=Hexagon(pt, Size);
-  hh.opacity(0.5).color(SelectItemColor).lineStyle({lineWidth:2}).level(lvl1);
+  hh.opacity(0.5).color(SelectItemColor).lineStyle({lineWidth:3}).level(lvl1);
   return hh;                     
 };
 
@@ -523,7 +523,7 @@ function SameColor(NoMove, ItemStr){
     if ((NoMove<=2)&&(ItemStr.substr(1,2)=='QB')){
       return false;
     }else{
-      if ((NoMove==7)&&(NoItem(ItemStr)!=1)&&(ItemCoord[01][1]==0)){
+      if (((NoMove==7)&&(NoItem(ItemStr)!=1)&&(ItemCoord[01][1]==0))||((NoMove==8)&&(NoItem(ItemStr)!=21)&&(ItemCoord[21][1]==0))){
         return false;
       }else{
         return true;
@@ -562,7 +562,43 @@ function BoardEmpty(ar, i){
     };
 };
 
+function OneStep(x,y){
+  ar=BoardCells(x, y);
+  var ar1=[];
+  for (var i=0; i<ar.length; i++){
+    var x1=ar[i][0];
+    var y1=ar[i][1];
+    if (Empt(x1,y1)&&BoardEmpty(ar,i)){
+      ar1.push(ar[i]);
+    };
+  };
+  return ar1;
+};
 
+function NextStep(x,y, x_before, y_before, step, maxStep){
+  if (step==maxStep){
+    if (step==0){
+      ABCtemp=ABCtemp.concat(OneStep(x,y));
+    }else{
+      var ar=OneStep(x,y);
+      var ar2=[];
+      for (var i=0;i<ar.length;i++){
+        if ((ar[i][0]!=x_before)||(ar[i][1]!=y_before)){
+          ar2.push([ar[i][0],ar[i][1]]);
+        };
+      };  
+      ABCtemp=ABCtemp.concat(ar2);
+    };
+  }else{
+    var ar=OneStep(x,y);
+    var ar2=[];
+    for (var i=0;i<ar.length;i++){
+      if ((ar[i][0]!=x_before)||(ar[i][1]!=y_before)){
+        NextStep(ar[i][0],ar[i][1], x, y, step+1, maxStep);
+      };
+    };  
+  };
+};
 
 
 function AvailableMoves(ItemStr, x, y){
@@ -613,21 +649,29 @@ function AvailableMoves(ItemStr, x, y){
     
     //QB
     if (ItemStr.substr(1,2)=='QB'){
-       ar=BoardCells(x, y);
-       var ar1=[];
-       for (var i=0; i<ar.length; i++){
-         var x1=ar[i][0];
-         var y1=ar[i][1];
-         if (Empt(x1,y1)&&BoardEmpty(ar,i)){
-           ar1.push(ar[i]);
-         };
-       };
-      return ar1;
+      return OneStep(x,y);
     };
   
-    //AN   TO DO
+    //AN 
     if (ItemStr.substr(1,2)=='AN'){
-      return AllBoardCells(x1, y1);
+      RemoveString(ItemStr, x, y);
+      var prStop=true;
+      var i=0;
+      ar=[];
+      while (prStop){
+        ABCtemp=[];
+        NextStep(x,y,x,y,0,i);
+        prStop=false;
+        for (j=0;j<ABCtemp.length;j++){
+          if (inArray(ABCtemp[j], ar) == -1){
+            ar.push(ABCtemp[j]);
+            prStop=true
+          };
+        };
+        i++;
+      };
+      AddString(ItemStr, x, y)
+      return ar;    
     };
        
     //BE
@@ -645,9 +689,18 @@ function AvailableMoves(ItemStr, x, y){
            };
          };
        };
-
       return ar1;
     };
+
+    //SP
+    if (ItemStr.substr(1,2)=='SP'){
+      RemoveString(ItemStr, x, y);
+      ABCtemp=[];
+      NextStep(x,y,x,y,0,2);
+      AddString(ItemStr, x, y)
+      return ABCtemp;
+    };
+
 
     //DELETE THIS
     return BoardCells(x, y);
