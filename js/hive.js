@@ -29,7 +29,7 @@ var starty=15;
 
 
 
-var Player=1;
+var PlayerWin;
 var NoMove=1;
 
 
@@ -38,6 +38,7 @@ var ArenaObj=[];
 var ItemCoord=[];
 var AvCells=[];
 var SelectItem=0;
+var GameStop=false;
 
 var xt=0;
 var yt=0;
@@ -83,6 +84,7 @@ function Init()
               //  this.color('#ff0000');
                 // text.string('x='+point.x+', y='+point.y);
                 // text.up('top');
+                if (!GameStop){
                   mouseClick=true;
                   x_old=point.x;
                   y_old=point.y;
@@ -143,6 +145,9 @@ function Init()
                        MoveItem(Arena[xt_1][yt_1], xt, yt);
 
                        if (Arena[xt_1][yt_1]!=as){
+                          if (CheckWin()) {
+                            GameStop=true;
+                          };
                           NextMove();
                        };
 
@@ -151,6 +156,10 @@ function Init()
                      };
 
                   };
+
+                }else{
+                  alert('Stop:'  + PlayerWin);
+                };
 
                 })
               .click(function(point){
@@ -508,10 +517,60 @@ function RemoveString(ItemStr, x, y){
 function NextMove(){
   NoMove++;
 
+  var pr=true;
+  var AvCells=[];
+  var x,y,i,as;
+
   if (NoMove%2==0){
     $('#ColorItem').html('<span style="background: #000000; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:white;">Black</span>');
+
+    i=21; 
+    while ((i<32)&&(pr)){
+      x=ItemCoord[i][0];
+      y=ItemCoord[i][1];
+      as=Arena[x][y];
+      AvCells=[];
+      if (NoItem(as)==i){
+        if (y<1){
+          AvCells=AvailableCells(as, x, y); 
+        }else{
+          AvCells=AvailableMoves(as, x, y); 
+        };
+      };
+      if (AvCells.length!=0){
+        pr = false;
+      };
+      i++;
+    };
+    if (pr){
+      NextMove();
+    }
+
   }else{
     $('#ColorItem').html('<span style="background: #ffffff; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:black;">White</span>');
+    
+    i=1; 
+    while ((i<12)&&(pr)){
+      x=ItemCoord[i][0];
+      y=ItemCoord[i][1];
+      as=Arena[x][y];
+      AvCells=[];
+      if (NoItem(as)==i){
+        if (y<1){
+          AvCells=AvailableCells(as, x, y); 
+        }else{
+          AvCells=AvailableMoves(as, x, y); 
+        };
+      };
+      if (AvCells.length!=0){
+        pr = false;
+      };
+      i++;
+    };
+    if (pr){
+      NextMove();
+    }
+
   };
 
 };
@@ -700,9 +759,27 @@ function AvailableMoves(ItemStr, x, y){
       AddString(ItemStr, x, y)
       return ABCtemp;
     };
+    
+    //GR  
+    if (ItemStr.substr(1,2)=='GR'){
+      var ar=BoardCells(x, y);
+      var ar1;
+      var ar2=[];
+      for (var i=0; i<ar.length; i++){
+        if (!Empt(ar[i][0], ar[i][1])) {
+          ar1=ar;
+          while (!Empt(ar1[i][0], ar1[i][1])){
+            ar1=BoardCells(ar1[i][0], ar1[i][1]);
+          };
+          ar2.push([ar1[i][0], ar1[i][1]]);
+        };
+      };
+      return ar2;
+    };
 
 
-    //DELETE THIS
+
+
     return BoardCells(x, y);
 
    }else{
@@ -769,7 +846,6 @@ function AllBoardCells(x, y){
     if (!Empt(x1,y1)){
       if (inArray([x1, y1], ABCtemp)==-1) {
         ABCtemp.push([x1, y1]);
-        // ABC=ABC.concat(AllBoardCells(x1, y1));
         AllBoardCells(x1, y1);
       };
     }else{
@@ -797,6 +873,59 @@ function SelectAvail(arr){
       };
  return ar;
 };
+
+
+function CheckWin(){
+ if (NoMove%2 == 1){
+  // White Win
+  var x=ItemCoord[21][0];
+  var y=ItemCoord[21][1];
+  var ar=BoardCells(x, y)
+  var pr=true;
+  if (y>0){
+    for (var i=0;i<ar.length;i++){
+      if (Empt(ar[i][0],ar[i][1])){
+        pr=false;
+        break;
+      };
+    };
+  }else{
+    pr=false;
+  };
+  if (pr) {
+    PlayerWin=1;
+    return true;
+  }else{
+    return false;
+  };
+ }else{
+  // Black Win
+  var x=ItemCoord[01][0];
+  var y=ItemCoord[01][1];
+  var ar=BoardCells(x, y)
+  var pr=true;
+  if (y>0){
+    for (var i=0;i<ar.length;i++){
+      if (Empt(ar[i][0],ar[i][1])){
+        pr=false;
+        break;
+      };
+    };
+  }else{
+    pr=false;
+  };
+  if (pr) {
+    PlayerWin=2;
+    return true;
+  }else{
+    return false;
+  };
+ };
+
+};
+
+
+
 
 
 function SelectAll(arr){
