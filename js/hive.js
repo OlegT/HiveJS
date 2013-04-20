@@ -84,12 +84,12 @@ function Init()
               //  this.color('#ff0000');
                 // text.string('x='+point.x+', y='+point.y);
                 // text.up('top');
+                
+                mouseClick=true;
+                x_old=point.x;
+                y_old=point.y;
+
                 if (!GameStop){
-                  mouseClick=true;
-                  x_old=point.x;
-                  y_old=point.y;
-
-
                   if (SelectItem==0){
 
                      var SelHex=FindXY(point);
@@ -157,8 +157,6 @@ function Init()
 
                   };
 
-                }else{
-                  alert('Stop:'  + PlayerWin);
                 };
 
                 })
@@ -167,6 +165,13 @@ function Init()
                 })
               .mouseup(function(point){
                 mouseClick=false;
+                if (GameStop){
+                  if (PlayerWin==1){
+                    alert('White win');
+                  }else{
+                    alert('Black win');
+                  };
+                };
                 })
               .mousemove(function(point){
                 if (mouseClick) {
@@ -876,7 +881,7 @@ function SelectAvail(arr){
 
 
 function CheckWin(){
- if (NoMove%2 == 1){
+ 
   // White Win
   var x=ItemCoord[21][0];
   var y=ItemCoord[21][1];
@@ -895,10 +900,8 @@ function CheckWin(){
   if (pr) {
     PlayerWin=1;
     return true;
-  }else{
-    return false;
   };
- }else{
+ 
   // Black Win
   var x=ItemCoord[01][0];
   var y=ItemCoord[01][1];
@@ -917,11 +920,9 @@ function CheckWin(){
   if (pr) {
     PlayerWin=2;
     return true;
-  }else{
-    return false;
   };
- };
 
+  return false;
 };
 
 
