@@ -988,7 +988,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7, Size*1.2,Size*1.4).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/QB.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/QB.gif";
 
 
             //BE1
@@ -1014,7 +1014,7 @@ function InitItems(){
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
-                  img[No].src="img/BE.gif";
+                  img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/BE.gif";
 
 
             //BE2
@@ -1040,7 +1040,7 @@ function InitItems(){
                     //var l=ArenaObj[No].length;
                     //ArenaObj[No][l-2].up('top');
                   }; 
-                 img[No].src="img/BE.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/BE.gif";
 
 
             //GR1
@@ -1064,7 +1064,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/GR.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GR.gif";
 
 
             //GR2
@@ -1088,7 +1088,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));
                   }; 
-                 img[No].src="img/GR.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GR.gif";
 
 
             //GR3
@@ -1112,7 +1112,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/GR.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GR.gif";
 
 
             //AN1
@@ -1136,7 +1136,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/AN.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/AN.gif";
 
 
            //AN2
@@ -1160,7 +1160,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/AN.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/AN.gif";
 
 
            //AN3
@@ -1184,7 +1184,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/AN.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/AN.gif";
 
 
             //SP1
@@ -1208,7 +1208,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/SP.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/SP.gif";
 
 
             //SP2
@@ -1232,7 +1232,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/SP.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/SP.gif";
 
 
 
@@ -1260,7 +1260,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.6,a.y-Size*0.7,Size*1.2,Size*1.4).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/QBb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/QBb.gif";
 
 
             //BE1
@@ -1284,7 +1284,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/BEb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/BEb.gif";
 
 
             //BE2
@@ -1308,7 +1308,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/BEb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/BEb.gif";
 
 
             //GR1
@@ -1332,7 +1332,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/GRb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GRb.gif";
 
 
             //GR2
@@ -1356,7 +1356,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/GRb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GRb.gif";
 
 
             //GR3
@@ -1380,7 +1380,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/GRb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/GRb.gif";
 
 
             //AN1
@@ -1404,7 +1404,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/ANb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/ANb.gif";
 
 
            //AN2
@@ -1428,7 +1428,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/ANb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/ANb.gif";
 
 
             //AN3
@@ -1452,7 +1452,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/ANb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/ANb.gif";
  
 
             //SP1
@@ -1476,7 +1476,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/SPb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/SPb.gif";
 
 
             //SP2
@@ -1500,7 +1500,7 @@ function InitItems(){
                     ArenaObj[No].push(jc.image(img[No],a.x-Size*0.5,a.y-Size*0.85,Size,Size*1.7).rotate(-30,'center').level(lvl+1));
                     ArenaObj[No].push(Hexagon(a, Size).color(colorBoard).lineStyle({lineWidth:BoardWidth}).level(lvl+2));                
                   }; 
-                 img[No].src="img/SPb.gif";
+                 img[No].src="https://raw.github.com/OlegT/HiveJS/master/img/SPb.gif";
 
 
 };
