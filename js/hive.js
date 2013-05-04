@@ -46,6 +46,9 @@ var xc=0;
 var yc=0;
 var as='';
 
+var sel_box_white;
+var sel_box_black;
+
 var xt_1, yt_1;
 
 var hh;
@@ -216,8 +219,9 @@ function Init()
 
  
       jc.rect(0,0,CanvasX,Size*3,'#a97d5d',1).level(2000);
-            
-      
+      sel_box_black=jc.rect(CanvasX/2+5,Size*3-3,CanvasX/2-10,3,'#000000',1).level(1);      
+      sel_box_white=jc.rect(5,Size*3-3,CanvasX/2-10,3,'#ffffff',1).level(2001);  
+
       InitItems();
 
       //1 player (White)
@@ -528,6 +532,8 @@ function NextMove(){
 
   if (NoMove%2==0){
     //$('#ColorItem').html('<span style="background: #000000; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:white;">Black</span>');
+    sel_box_black.level(2001);
+    sel_box_white.level(1);
 
     i=21; 
     while ((i<32)&&(pr)){
@@ -553,7 +559,9 @@ function NextMove(){
 
   }else{
     //$('#ColorItem').html('<span style="background: #ffffff; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:black;">White</span>');
-    
+    sel_box_black.level(1);
+    sel_box_white.level(2001);
+
     i=1; 
     while ((i<12)&&(pr)){
       x=ItemCoord[i][0];
