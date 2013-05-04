@@ -527,7 +527,7 @@ function NextMove(){
   var x,y,i,as;
 
   if (NoMove%2==0){
-    $('#ColorItem').html('<span style="background: #000000; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:white;">Black</span>');
+    //$('#ColorItem').html('<span style="background: #000000; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:white;">Black</span>');
 
     i=21; 
     while ((i<32)&&(pr)){
@@ -552,7 +552,7 @@ function NextMove(){
     }
 
   }else{
-    $('#ColorItem').html('<span style="background: #ffffff; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:black;">White</span>');
+    //$('#ColorItem').html('<span style="background: #ffffff; padding: 10px 20px 10px 20px; border: 1px solid #0088cf; color:black;">White</span>');
     
     i=1; 
     while ((i<12)&&(pr)){
