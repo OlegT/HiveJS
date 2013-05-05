@@ -70,7 +70,7 @@ var img=[];
 
 //Server
 URL_Server="https://script.google.com/macros/s/AKfycbxyF93ZbXru9SvsfOUTXJSWY6rUkd_29tQ-VZCwh3Xf4gvEwcp9/exec"
-
+Server_Answer="";
 
 
 
@@ -161,9 +161,14 @@ function Init()
                        SendAjax(Arena[xt_1][yt_1].substring(0,5) + "," + xt + "," + yt);
 
                        MoveItem(Arena[xt_1][yt_1], xt, yt);
-
+                        
+                       // while (Server_Answer===""){
+                       //   // Wait Server
+                       //   Server_Answer=Server_Answer;
+                       // };  
                        
-
+                     
+                       
 
                        if (Arena[xt_1][yt_1]!=as){
                           if (CheckWin()) {
@@ -972,16 +977,30 @@ function SelectAll(arr){
 
 
 
+
+
+
+
+
+
+
 function SendAjax(iStr){
+  Server_Answer="";
   $.get(
     URL_Server,
     {
-      p1: iStr,
+      p1: iStr
+    },
+    function(data){
+      Server_Answer=data;
+      ServerMove(Server_Answer);
     }
   );
-
 };
 
+function ServerMove(Server_Answer){
+  //alert('Server alert:' + Server_Answer)
+};
 
 
 
