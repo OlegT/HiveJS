@@ -65,6 +65,18 @@ var hhAr=[];
 var hhAv=[];
 var img=[];
 
+
+
+
+//Server
+URL_Server="https://script.google.com/macros/s/AKfycbxyF93ZbXru9SvsfOUTXJSWY6rUkd_29tQ-VZCwh3Xf4gvEwcp9/exec"
+
+
+
+
+
+
+
 //var qbiiim;
 // $(function() {
 //   jc.start(idCanvas,true);
@@ -145,7 +157,13 @@ function Init()
                      yt=SelHex.y;
                      
                      if ( inArray([xt,yt], AvCells) >-1){
+
+                       SendAjax(Arena[xt_1][yt_1].substring(0,5) + "," + xt + "," + yt);
+
                        MoveItem(Arena[xt_1][yt_1], xt, yt);
+
+                       
+
 
                        if (Arena[xt_1][yt_1]!=as){
                           if (CheckWin()) {
@@ -221,6 +239,9 @@ function Init()
       jc.rect(0,0,CanvasX,Size*3,'#a97d5d',1).level(2000);
       sel_box_black=jc.rect(CanvasX/2+5,Size*3-3,CanvasX/2-10,3,'#000000',1).level(1);      
       sel_box_white=jc.rect(5,Size*3-3,CanvasX/2-10,3,'#ffffff',1).level(2001);  
+      
+      SendAjax("START");
+
 
       InitItems();
 
@@ -951,7 +972,15 @@ function SelectAll(arr){
 
 
 
+function SendAjax(iStr){
+  $.get(
+    URL_Server,
+    {
+      p1: iStr,
+    }
+  );
 
+};
 
 
 
